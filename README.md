@@ -61,25 +61,20 @@ Introduce account lockout after multiple failed attempts
 
 Add CAPTCHA or multi-factor authentication
 
-2. Information Disclosure via Error Messages
+2. Information Disclosure
 
-The login system returns different error messages depending on the authentication failure.
-
-For example:
-
-Username does not exist
-
-Incorrect password
+The login system currently returns a single generic message, “Credentials mismatch,” whenever authentication fails.
 
 Risk
-This reveals information about valid usernames in the system, allowing attackers to focus only on guessing passwords for confirmed accounts.
+Although this behavior is secure today, problems could arise if future updates introduce different error messages for invalid usernames and incorrect passwords. Distinct responses could allow attackers to identify valid usernames and focus password-guessing attacks on those accounts.
 
 Future Mitigation
 
-Return a generic authentication message such as
-“Invalid username or password.”
+Always return a single generic authentication failure message
 
-Avoid exposing authentication logic through user-facing error messages
+Avoid revealing whether the username or password was incorrect
+
+Maintain consistent error handling for all authentication failures
 
 3. Lack of Input Validation
 
