@@ -1,6 +1,10 @@
 from flask import Flask, request, redirect, url_for
+import os
 
 app = Flask(__name__)
+
+susername = os.environ.get('username')
+spassword = os.environ.get('password')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -8,7 +12,7 @@ def login():
 	if request.method == 'POST':
 		username = request.form['username']
 		password = request.form['password']
-		if username == 'admin' and password == 'password123': 
+		if username == susername  and password == spassword: 
 			return redirect(url_for('home')) 
 		else: 
 			return(" Credentials mismatch ")
@@ -25,4 +29,4 @@ def home():
       <H1> "Welcome to the Homepage" </H1> '''
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0')
