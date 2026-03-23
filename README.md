@@ -226,3 +226,6 @@ Validate and sanitize all user-supplied URLs
 Restrict outbound network requests from the server
 
 Use allowlists for permitted external requests
+
+## CI/CD Pipeline
+Automated pipeline includes pytest, Bandit SAST, and Safety dependency scanning.
