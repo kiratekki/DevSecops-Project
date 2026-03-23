@@ -150,6 +150,8 @@ Use secure password storage mechanisms such as hashing (bcrypt)
 
 The application is currently running with `debug=True`, which exposes detailed error messages and internal application information.
 
+Note: `host='0.0.0.0'` is intentionally configured to enable Docker container networking. This is a known accepted risk and will be restricted in production deployment.
+
 # Risk
 Attackers can view internal file paths, application logic, and potentially sensitive system details when errors occur.
 
