@@ -28,13 +28,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run tests
-        run: pytest test_app.py -v
-
-
-      - name: Install Bandit
-        run: pip install bandit
-
+      - name: Run Safety check scan for dependencies
+        run: safety scan -r requirements.txt
 
       - name: Run Bandit SAST scan
         run: bandit -r app.py --exit-zero
+
+      - name: Run tests
+        run: pytest test_app.py -v
