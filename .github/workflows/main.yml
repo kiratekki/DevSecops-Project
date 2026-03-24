@@ -39,3 +39,14 @@ jobs:
 
       - name: Run tests
         run: pytest test_app.py -v
+
+      - name: Start Flask and wait
+        run: python3 app.py & sleep 5
+
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.15.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+          target: 'http://127.0.0.1:5000/login'
+          cmd_options: '-a'
