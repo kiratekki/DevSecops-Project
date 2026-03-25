@@ -53,9 +53,3 @@ jobs:
           target: 'http://127.0.0.1:5000/login'
           allow_issue_writing: False
           cmd_options: '-a'
-
-      - name: Upload ZAP reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: Scan_Records
-          path: report*
