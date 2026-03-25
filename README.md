@@ -229,3 +229,28 @@ Use allowlists for permitted external requests
 
 ## CI/CD Pipeline
 Automated pipeline includes pytest, Bandit SAST, and Safety dependency scanning.
+
+### Vulnerabilities found while ZAP scan
+
+## Missing Content Security Policy (CSP) Header - XSS Risk
+
+The application does not implement a Content Security Policy (CSP) header, which means the browser does not have restrictions on executing scripts.
+
+This vulnerability was identified using Dynamic Application Security Testing (DAST) with OWASP ZAP, which simulated real HTTP requests against the running application and analyzed the responses.
+
+# Risk
+If an attacker is able to inject malicious JavaScript into the application (for example through input fields), the browser will execute it. This could lead to session hijacking, data theft, or unauthorized actions performed on behalf of the user.
+
+# Future Mitigation
+
+Implement a Content Security Policy (CSP) header to restrict script execution sources
+
+Sanitize and validate all user inputs to prevent script injection
+
+Use secure frameworks or libraries that automatically escape output
+
+Set HTTP security headers such as:
+Content-Security-Policy
+X-Content-Type-Options
+X-Frame-Options
+
