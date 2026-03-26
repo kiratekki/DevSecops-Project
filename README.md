@@ -254,3 +254,28 @@ Content-Security-Policy
 X-Content-Type-Options
 X-Frame-Options
 
+### Vulnerabilities found while Trivy scan
+
+##Container Vulnerability — CVE-2026-23949 (Identified by Trivy)
+
+The Docker image used in this project contains a known vulnerability (CVE-2026-23949) within the base image or its underlying system packages.
+
+This vulnerability was identified using Trivy, a container vulnerability scanner, as part of the CI/CD pipeline. Unlike Bandit (SAST), Safety (dependency scanning), and ZAP (DAST), Trivy scans the entire Docker image including OS packages, system libraries, and base image components.
+
+CVE-2026-23949 is a path traversal vulnerability in jaraco.context that allows attackers to extract malicious tar archives outside the intended directory, potentially overwriting sensitive system files
+
+# Risk
+If a vulnerable system package inside the container is exploited, an attacker could potentially gain unauthorized access or execute arbitrary code within the container environment, compromising the application and underlying system.
+
+# Future Mitigation
+
+Use a minimal and secure base image (e.g., python:3.11-slim instead of full image)
+
+Regularly update base images to patched versions
+
+Integrate automated container scanning in CI/CD (Trivy already implemented)
+
+Apply image hardening and remove unnecessary packages
+
+Continuously monitor CVEs affecting base images and dependencies
+
