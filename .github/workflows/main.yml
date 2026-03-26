@@ -53,3 +53,16 @@ jobs:
           target: 'http://127.0.0.1:5000/login'
           allow_issue_writing: False
           cmd_options: '-a'
+
+      - name: Docker image build
+        run: docker build -t dockerimage .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          image-ref: 'dockerimage'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH,MEDIUM'
