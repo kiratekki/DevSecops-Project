@@ -279,3 +279,84 @@ Apply image hardening and remove unnecessary packages
 
 Continuously monitor CVEs affecting base images and dependencies
 
+###Cloud Deployment – AWS EC2
+
+The application was deployed to a cloud environment using an AWS EC2 instance. The deployment demonstrates how a containerized application can be built, transferred, and executed in a remote server environment.
+
+EC2 Instance Details
+Operating System: Ubuntu 24.04 LTS
+Instance Type: t3.micro (Free Tier eligible)
+Region: ap-southeast-2 (Sydney)
+Access Method: SSH using key-pair authentication
+
+The instance was accessed securely using a private .pem key and configured via terminal.
+
+###Security Group Configuration
+
+A Security Group was configured to control inbound traffic to the EC2 instance.
+
+Configured rules:
+
+Port 22 (SSH) — Remote administrative access
+Port 5000 (Custom TCP) — Flask application access
+
+Both ports were temporarily set to allow traffic from 0.0.0.0/0 to enable remote access and public testing.
+
+#Risk
+
+Allowing unrestricted access (0.0.0.0/0) increases exposure to unauthorized access attempts and brute-force attacks, especially on SSH.
+
+#Future Mitigation
+
+Restrict SSH access to specific trusted IP addresses
+Limit application exposure where possible
+Use secure access methods such as VPN or bastion host
+
+###Running the Application in Docker
+
+The application was deployed using Docker to ensure consistency between local, pipeline, and cloud environments.
+
+Steps performed:
+
+Cloned repository from GitHub
+Built Docker image on EC2 instance
+Ran container with port mapping and environment variables
+
+Command used:
+
+sudo docker run -d -p 5000:5000 \
+-e username=admin \
+-e password=admin123 \
+dockerimage
+
+The application is accessible via:
+
+http://<EC2-public-ip>:5000/login
+
+##Known Risks
+
+##Debug Mode Enabled
+
+The Flask application is currently running with debug mode enabled.
+
+#Risk
+
+Debug mode can expose internal application details and may lead to information disclosure or arbitrary code execution.
+
+
+#Future Mitigation
+Disable debug mode in production
+Use environment-based configuration
+
+##Hardcoded Credentials in Docker Runtime
+
+Credentials are passed directly in the Docker run command.
+
+Risk
+
+Sensitive data may be exposed through command history or system processes.
+
+Future Mitigation
+Use secure secret management (e.g., AWS Secrets Manager)
+Store credentials in protected environment files
+Avoid passing secrets via command line
